@@ -1,0 +1,54 @@
+class StringBuilderOperations {
+    StringBuilderOperations() {
+        // Create StringBuilder
+        StringBuilder sb = new StringBuilder("Hello");
+
+        // append()
+        sb.append(" World");
+        System.out.println("After append: " + sb);
+
+        // insert()
+        sb.insert(5, ",");
+        System.out.println("After insert: " + sb);
+
+        // replace()
+        sb.replace(0, 5, "Hi");
+        System.out.println("After replace: " + sb);
+
+        // delete()
+        sb.delete(2, 3);
+        System.out.println("After delete: " + sb);
+
+        // deleteCharAt()
+        sb.deleteCharAt(2);
+        System.out.println("After deleteCharAt: " + sb);
+
+        // reverse()
+        sb.reverse();
+        System.out.println("After reverse: " + sb);
+
+        // length()
+        System.out.println("Length: " + sb.length());
+
+        // capacity()
+        System.out.println("Capacity: " + sb.capacity());
+
+        // charAt()
+        System.out.println("Character at index 1: " + sb.charAt(1));
+
+        // setCharAt()
+        sb.setCharAt(1, 'X');
+        System.out.println("After setCharAt: " + sb);
+
+        // substring()
+        System.out.println("Substring (1 to 4): " + sb.substring(1, 4));
+
+        // ensureCapacity()
+        sb.ensureCapacity(50);
+        System.out.println("Capacity after ensureCapacity: " + sb.capacity());
+
+        // toString()
+        String str = sb.toString();
+        System.out.println("Converted to String: " + str);
+    }
+}
