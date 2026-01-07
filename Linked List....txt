@@ -1,0 +1,130 @@
+Linked List...
+
+
+-> Merge two Sorted Linked Lists
+
+	LLNode merge(L1,L2){
+		
+		if(L1==null) return L2;
+		if(L2==null) return L1;
+
+		LLNode poi = null;
+		if(L1.data > L2.data){
+			poi = L2;
+			L2 = L2.next;
+		}
+
+		else{
+			poi = L1;
+			L1 = L1.next;
+		}
+		LLNode temp = poi;
+
+		while(L1!=null && L2!=null)
+		{
+			if(L1.data<L2.data){
+				temp.next = L1;
+				L1 = L1.next;
+			}
+			else{
+				temp.next = L2;
+				L2 = L2.next;
+			}
+			temp = temp.next;
+		}
+
+		if(L1!=null) temp.next = L1;
+		else temp.next = L2;
+		
+		return poi;
+	} 
+
+
+
+
+->  Check given LinkedList is Palindrome or not
+
+		boolean ispalin(LLNode root){
+
+			if(root==null) return true;
+			
+			LLNode mid = mid(root);
+			LLNode root2 =mid.next;
+			mid.next = null;
+			
+			root2 = reverse(root2);
+
+			while(root2!=null){
+				if(root.data != root2.data) return false;
+
+				root = root.next;
+				root2 = root2.next;
+			}
+
+			return true;
+		}
+
+		
+		LLNode reverse(LLNode root){
+		
+			LLNode pre = null;
+			LLNode cur = root;
+			LLNode nxt = root;
+
+			while(cur!=null){
+				 nxt = cur.next;
+				cur.next = pre;
+				pre = cur;
+				cur = nxt; 
+			}
+			
+			return pre;
+			
+		}
+
+
+	
+-> List Cycle	
+	
+	-- 1.Is Cycle Present
+	-- 2.Start node of the Cycle
+	-- 3.Length of the cycle
+	-- 4.Mate it acyclic
+
+
+
+		cycle(LLNode root){
+			if(root == null) return;
+			
+			int count =0;
+
+			LLNode f = root; 	 
+			LLNode s = root;
+
+			while(f!=null && f.next!=null){
+				
+				f = f.next.next;
+				s = s.next;
+				
+				if(f==s){              // Q1
+					s = root;
+			 		
+					while(s!=f){			//Q2
+						s = s.next;
+						f = f.next;
+					}
+				
+					while(s.next!=f){
+
+						s = s.next;
+						count++;		//Q3
+					}
+
+					s.next = null;			//Q4
+					
+
+					return count; (or) return root;
+				}
+			}
+		}
+			
