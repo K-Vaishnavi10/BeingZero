@@ -1,0 +1,58 @@
+//Binary exponentiation
+long modMultiply(long a, long b, long mod) {
+    return ((a % mod) * (b % mod)) % mod;
+}
+
+long solve(long A, long B, long M) {
+    if (B == 0) return 1;               
+    if (B == 1) return A % M;
+        
+    long ans = solve(A, B / 2, M);
+    long res = modMultiply(ans, ans, M);
+
+    if (B % 2 == 0)
+        return res;
+    else
+        return modMultiply(res, A % M, M);
+}
+--------------------------------------------------------------------------------------------------
+//Matrix exponentiation 
+long mod = 1000000007;
+
+public int[][] solve(int n, int m, int a[][]) {
+    if (n == 0) return identity(m);
+    if (n == 1) return a;
+    int[][] half = solve(n / 2, m, a);
+    int[][] sq = product(half, half, m);
+    if ((n & 1) == 0) return sq;
+    return product(sq, a, m);
+}
+
+public int[][] identity(int m) {
+    int[][] res = new int[m][m];
+    for (int i = 0; i < m; i++) {
+        res[i][i] = 1;
+    }
+    return res;
+}
+
+public int[][] product(int[][] a, int[][] b, int m) {
+    int[][] res = new int[m][m];
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < m; j++) {
+            for (int k = 0; k < m; k++) {
+                res[i][j] = addM(res[i][j], multiM(a[i][k], b[k][j]));
+            }
+        }
+    }
+    return res;
+}
+
+public int addM(int a, int b) {
+    return (int) (((long) a % mod + b % mod) % mod);
+}
+
+public int multiM(int a, int b) {
+    return (int) ((((long) a % mod) * ((long) b % mod)) % mod);
+}
+--------------------------------------------------------------------------------------------------
