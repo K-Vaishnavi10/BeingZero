@@ -1,6 +1,5 @@
 Linked List...
 
-
 -> Merge two Sorted Linked Lists
 
 	LLNode merge(L1,L2){
@@ -13,7 +12,6 @@ Linked List...
 			poi = L2;
 			L2 = L2.next;
 		}
-
 		else{
 			poi = L1;
 			L1 = L1.next;
@@ -35,15 +33,10 @@ Linked List...
 
 		if(L1!=null) temp.next = L1;
 		else temp.next = L2;
-		
 		return poi;
 	} 
 
-
-
-
 ->  Check given LinkedList is Palindrome or not
-
 		boolean ispalin(LLNode root){
 
 			if(root==null) return true;
@@ -60,11 +53,9 @@ Linked List...
 				root = root.next;
 				root2 = root2.next;
 			}
-
 			return true;
 		}
 
-		
 		LLNode reverse(LLNode root){
 		
 			LLNode pre = null;
@@ -77,12 +68,8 @@ Linked List...
 				pre = cur;
 				cur = nxt; 
 			}
-			
 			return pre;
-			
 		}
-
-
 	
 -> List Cycle	
 	
@@ -90,8 +77,6 @@ Linked List...
 	-- 2.Start node of the Cycle
 	-- 3.Length of the cycle
 	-- 4.Mate it acyclic
-
-
 
 		cycle(LLNode root){
 			if(root == null) return;
@@ -113,18 +98,15 @@ Linked List...
 						s = s.next;
 						f = f.next;
 					}
-				
+		
 					while(s.next!=f){
-
 						s = s.next;
 						count++;		//Q3
 					}
-
 					s.next = null;			//Q4
-					
 
 					return count; (or) return root;
 				}
 			}
 		}
-			
+		
