@@ -1,0 +1,108 @@
+Bit Manipulation
+
+->  Finding AKELA
+
+	int findAK(int arr[]){
+		int x =0;
+		
+		for(int ele : arr) x ^= ele;
+		
+		return x;
+	}
+
+-> Check set Bit(at position k of N)
+
+	M-1 : (N &(1<<k))!=0
+	M-2 : ((N>>k)&1)!=0
+
+-> Set kth Bit
+
+	(N|(1L<<k))
+
+-> Clear kth Bit
+
+	N & (~(1L<<k))
+
+-> Flip the kth Bit
+
+	(N ^ (1L<<k))
+
+-> Power of 2/4/8/16... (or) not
+
+	M-1 : if(count_SetBit(n)==1) return true;
+	M-2 : if(N>0 && (N&(N-1)==0)) return true;
+
+-> Generate all Sub Sets
+
+	List<List<Integer>> subsets(int arr[], int n){
+		int m = 1<<n;    //number of possible subsets
+
+		List<List<Integer>> outer  = new ArrayList<>();
+		for(int num =0;num<m;num++){
+			List<Integer> inner = new ArrayList<>();
+			for(int bp =0;bp<n;bp++){
+				if(check_setbit(num,bp)) inner.add(arr[bp]);
+			}
+			outer.add(inner);
+		}
+		return outer;
+	}
+
+-> Triplet Trouble( Every number is repeated 3 times except one number, find it)
+
+	int triplet(int arr[]){
+		int ans = 0;
+		for(int bp=0;bp<64;bp++){			// Here we are checking bit wise for every element
+			int count =0;
+			for(int ele: arr){
+				if(check_setBit(ele,bp)) count++;
+			}
+
+			if(count%3 !=0) ans += (1L<<bp);       
+			}
+		return ans;
+	}
+
+-> Find Missing and repeated number
+	List<Integer> solve(int arr[]){
+		List<Integer> ls = new ArrayList<>();
+
+		int x =0, n=arr.length;
+		for(int i=0;i<n;i++){
+			x^=(i+1);
+ 			x^=arr[i];
+		}
+		
+		int pos = -1;  // position where both missing and repeated numbers having different bits
+		for(int bp0;bp<64;bp++){
+			if(check_setBit(x,bp)) {
+				pos = bp; break;
+			}
+		}
+		
+		int a=0,b=0;  //Dividing into two groups
+		for(int i=0;i<n;i++){
+			if(check_setBit(arr[i],pos)) a^=arr[i];
+			else b^= arr[i];
+
+			if(check_setbit(i+1,pos)) a^= (i+1);
+			else b^= (i+1);
+		}
+
+		for(int ele : arr){        //performing the linear search which one is present and adding to list
+			if(ele==a){
+				ans.add(a);
+				ans.add(b);
+				
+				return ans;
+			}
+			else if(ele==b){
+				ans.add(b);
+				ans.add(a);
+			
+				return ans;
+			}
+		}
+
+	
+		
