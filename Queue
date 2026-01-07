@@ -1,0 +1,219 @@
+-----------QUEUE-----------
+
+
+
+********LEVEL ORDER TRAVERSAL********
+
+
+class BeingZero {
+
+    List<List<Integer>> solve(TreeNode r) {
+
+        List<List<Integer>> ans = new ArrayList<>();
+        if (r == null)
+            return ans;
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(r);
+
+        while (!q.isEmpty()) {
+
+            int n = q.size();
+            List<Integer> in = new ArrayList<>();
+
+            for (int i = 0; i < n; i++) {
+                TreeNode ele = q.remove();
+                in.add(ele.val);
+
+                if (ele.left != null)
+                    q.add(ele.left);
+
+                if (ele.right != null)
+                    q.add(ele.right);
+            }
+
+            ans.add(in);
+        }
+
+        return ans;
+    }
+} 
+
+
+
+*********REDUCE N TO 1**********
+
+📌 Question: Minimum Steps to Reach 1
+
+You are given a positive integer N.
+You can perform the following operations on N:
+
+If N is divisible by 2, replace N with N / 2
+
+If N is divisible by 3, replace N with N / 3
+
+Replace N with N − 1
+
+Each operation takes 1 step.
+
+🔹 Task
+
+Find the minimum number of steps required to reduce N to 1.
+
+*******************CODE************
+
+import java.util.*;
+
+class Pair {
+    int val;
+    int level;
+
+    Pair(int v, int l) {
+        val = v;
+        level = l;
+    }
+}
+
+class BeingZero {
+
+    public int solve(int n) {
+
+        Queue<Pair> q = new LinkedList<>();
+        HashSet<Integer> vis = new HashSet<>();
+
+        q.add(new Pair(n, 0));
+        vis.add(n);
+
+        while (!q.isEmpty()) {
+
+            Pair p = q.remove();
+            int val = p.val;
+            int level = p.level;
+
+            if (val == 1)
+                return level;
+
+            // val / 2
+            if (val % 2 == 0 && !vis.contains(val / 2)) {
+                q.add(new Pair(val / 2, level + 1));
+                vis.add(val / 2);
+            }
+
+            // val / 3
+            if (val % 3 == 0 && !vis.contains(val / 3)) {
+                q.add(new Pair(val / 3, level + 1));
+                vis.add(val / 3);
+            }
+
+            // val - 1
+            if (val - 1 > 0 && !vis.contains(val - 1)) {
+                q.add(new Pair(val - 1, level + 1));
+                vis.add(val - 1);
+            }
+        }
+
+        return -1;
+    }
+}
+
+
+
+
+
+
+*************BURN A TREE*************
+
+
+class BeingZero {
+
+    public int solve(TreeNode root, int st) {
+
+        if (root == null)
+            return 0;
+
+        // Map to store parent of each node
+        HashMap<TreeNode, TreeNode> parent = new HashMap<>();
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+
+        // Step 1: Map parents using BFS
+        while (!q.isEmpty()) {
+            TreeNode ele = q.poll();
+
+            if (ele.left != null) {
+                parent.put(ele.left, ele);
+                q.add(ele.left);
+            }
+
+            if (ele.right != null) {
+                parent.put(ele.right, ele);
+                q.add(ele.right);
+            }
+        }
+
+        // Step 2: Find starting node
+        TreeNode start = search(root, st);
+
+        // Step 3: Burn the tree
+        HashSet<TreeNode> vis = new HashSet<>();
+        q.add(start);
+        vis.add(start);
+
+        int time = 0;
+
+        while (!q.isEmpty()) {
+            int n = q.size();
+            boolean flag = false;
+
+            for (int i = 0; i < n; i++) {
+                TreeNode ele = q.poll();
+
+                // Burn parent
+                if (parent.containsKey(ele) && !vis.contains(parent.get(ele))) {
+                    vis.add(parent.get(ele));
+                    q.add(parent.get(ele));
+                    flag = true;
+                }
+
+                // Burn left child
+                if (ele.left != null && !vis.contains(ele.left)) {
+                    vis.add(ele.left);
+                    q.add(ele.left);
+                    flag = true;
+                }
+
+                // Burn right child
+                if (ele.right != null && !vis.contains(ele.right)) {
+                    vis.add(ele.right);
+                    q.add(ele.right);
+                    flag = true;
+                }
+            }
+
+            if (flag)
+                time++;
+        }
+
+        return time;
+    }
+
+    // Search function to find starting node
+    private TreeNode search(TreeNode root, int val) {
+        if (root == null)
+            return null;
+
+        if (root.val == val)
+            return root;
+
+        TreeNode left = search(root.left, val);
+        if (left != null)
+            return left;
+
+        return search(root.right, val);
+    }
+}
+
+
+
+
