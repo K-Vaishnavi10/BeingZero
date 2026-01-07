@@ -1,0 +1,78 @@
+----------STACK-----------
+
+
+********NEXT GREATER ELEMENT**********
+
+ public int[] solve(int arr[], int n) {
+        int ans[] = new int[n]; // Stores the Next Greater Elements
+        Stack<Integer> st = new Stack<>(); // Stack to track indices
+        Arrays.fill(ans, -1); // Initialize NGE as -1 for all elements
+
+        for (int i = 0; i < n; i++) {
+            // Find NGE for elements in the stack
+            while (!st.isEmpty() && arr[i] > arr[st.peek()]) {
+                ans[st.pop()] = arr[i]; // Assign NGE and remove from stack
+            }
+            st.push(i); // Push current index for future comparisons
+        }
+        return ans;
+    }
+
+
+**********NEXT SMALLER ELEMENT************
+
+
+
+public int[] solve(int arr[], int n) {
+        int ans[] = new int[n];
+        Stack<Integer> st = new Stack<>();
+        Arrays.fill(ans, -1);
+
+        for (int i = 0; i < n; i++) {
+            while (!st.isEmpty() && arr[i] < arr[st.peek()]) {
+                ans[st.pop()] = arr[i];
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+
+
+***********PREVIOUS GREATER ELEMENT************
+
+
+public int[] solve(int arr[], int n) {
+        int ans[] = new int[n];
+        Stack<Integer> st = new Stack<>();
+        Arrays.fill(ans, -1);
+
+        for (int i = n - 1; i >= 0; i--) {
+            while (!st.isEmpty() && arr[i] > arr[st.peek()]) {
+                ans[st.pop()] = arr[i];
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+
+
+
+***********PREVIOUS SMALLER ELEMENT******************
+
+
+public int[] solve(int arr[], int n) {
+        int ans[] = new int[n];
+        Stack<Integer> st = new Stack<>();
+        Arrays.fill(ans, -1);
+
+        for (int i = n - 1; i >= 0; i--) {
+            while (!st.isEmpty() && arr[i] < arr[st.peek()]) {
+                ans[st.pop()] = arr[i];
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+
+
+
