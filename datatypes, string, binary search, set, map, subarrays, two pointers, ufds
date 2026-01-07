@@ -1,0 +1,451 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+public class MindMapping {
+    public class Datatypes {
+        public Datatypes() {
+
+            System.out.println("Range of byte: " + Byte.MIN_VALUE + " to " + Byte.MAX_VALUE);
+            System.out.println("Range of short: " + Short.MIN_VALUE + " to " + Short.MAX_VALUE);
+            System.out.println("Range of int: " + Integer.MIN_VALUE + " to " + Integer.MAX_VALUE);
+            System.out.println("Range of long: " + Long.MIN_VALUE + " to " + Long.MAX_VALUE);
+
+            System.out.println("Range of float: " + Float.MIN_VALUE + " to " + Float.MAX_VALUE);
+            System.out.println("Range of double: " + Double.MIN_VALUE + " to " + Double.MAX_VALUE);
+
+            System.out.println("Range of char: " + (int) Character.MIN_VALUE + " to " + (int) Character.MAX_VALUE);
+            System.out.println("Boolean values: " + Boolean.FALSE + " and " + Boolean.TRUE);
+        }
+    }
+
+    class StringBuilderOperations {
+        StringBuilderOperations() {
+            // Create StringBuilder
+            StringBuilder sb = new StringBuilder("Hello");
+
+            // append()
+            sb.append(" World");
+            System.out.println("After append: " + sb);
+
+            // insert()
+            sb.insert(5, ",");
+            System.out.println("After insert: " + sb);
+
+            // replace()
+            sb.replace(0, 5, "Hi");
+            System.out.println("After replace: " + sb);
+
+            // delete()
+            sb.delete(2, 3);
+            System.out.println("After delete: " + sb);
+
+            // deleteCharAt()
+            sb.deleteCharAt(2);
+            System.out.println("After deleteCharAt: " + sb);
+
+            // reverse()
+            sb.reverse();
+            System.out.println("After reverse: " + sb);
+
+            // length()
+            System.out.println("Length: " + sb.length());
+
+            // capacity()
+            System.out.println("Capacity: " + sb.capacity());
+
+            // charAt()
+            System.out.println("Character at index 1: " + sb.charAt(1));
+
+            // setCharAt()
+            sb.setCharAt(1, 'X');
+            System.out.println("After setCharAt: " + sb);
+
+            // substring()
+            System.out.println("Substring (1 to 4): " + sb.substring(1, 4));
+
+            // ensureCapacity()
+            sb.ensureCapacity(50);
+            System.out.println("Capacity after ensureCapacity: " + sb.capacity());
+
+            // toString()
+            String str = sb.toString();
+            System.out.println("Converted to String: " + str);
+        }
+    }
+
+    class BinarySearch {
+
+        // 1. Floor of a number
+        public int floor(int[] arr, int x) {
+            int low = 0, high = arr.length - 1;
+            int ans = -1;
+
+            while (low <= high) {
+                int mid = (low + high) / 2;
+
+                if (arr[mid] <= x) {
+                    ans = arr[mid];
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+            return ans;
+        }
+
+        // 2. Ceil of a number
+        public int ceil(int[] arr, int x) {
+            int low = 0, high = arr.length - 1;
+            int ans = -1;
+
+            while (low <= high) {
+                int mid = (low + high) / 2;
+
+                if (arr[mid] >= x) {
+                    ans = arr[mid];
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            }
+            return ans;
+        }
+
+        // 3. Square root of a number (integer part)
+        public int squareRoot(int n) {
+            int low = 0, high = n;
+            int ans = 0;
+
+            while (low <= high) {
+                int mid = (low + high) / 2;
+
+                if ((long) mid * mid <= n) {
+                    ans = mid;
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+            return ans;
+        }
+
+        // 4. Corrupted files (First corrupted file)
+        public int firstCorrupted(int[] files) {
+            int low = 0, high = files.length - 1;
+            int ans = -1;
+
+            while (low <= high) {
+                int mid = (low + high) / 2;
+
+                if (files[mid] == 1) { // corrupted
+                    ans = mid;
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            }
+            return ans;
+        }
+
+        // 5. CNOZ – Count Number of Zeros (sorted binary array)
+        public int countZeros(int[] arr) {
+            int low = 0, high = arr.length - 1;
+            int firstOne = arr.length;
+
+            while (low <= high) {
+                int mid = (low + high) / 2;
+
+                if (arr[mid] == 1) {
+                    firstOne = mid;
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            }
+            return firstOne;
+        }
+
+        // 6. Search in Rotated Sorted Array
+        public int searchRotated(int[] arr, int target) {
+            int low = 0, high = arr.length - 1;
+
+            while (low <= high) {
+                int mid = (low + high) / 2;
+
+                if (arr[mid] == target)
+                    return mid;
+
+                if (arr[low] <= arr[mid]) {
+                    if (target >= arr[low] && target < arr[mid])
+                        high = mid - 1;
+                    else
+                        low = mid + 1;
+                } else {
+                    if (target > arr[mid] && target <= arr[high])
+                        low = mid + 1;
+                    else
+                        high = mid - 1;
+                }
+            }
+            return -1;
+        }
+    }
+
+    class SetOperations {
+        SetOperations() {
+            Set<Integer> set1 = new HashSet<>();
+            Set<Integer> set2 = new HashSet<>();
+
+            // Adding elements
+            set1.add(1);
+            set1.add(2);
+            set1.add(3);
+            System.out.println("Set1: " + set1);
+
+            set2.add(3);
+            set2.add(4);
+            set2.add(5);
+            System.out.println("Set2: " + set2);
+
+            // Union
+            Set<Integer> union = new HashSet<>(set1);
+            union.addAll(set2);
+            System.out.println("Union: " + union);
+
+            // Intersection
+            Set<Integer> intersection = new HashSet<>(set1);
+            intersection.retainAll(set2);
+            System.out.println("Intersection: " + intersection);
+
+            // Difference (set1 - set2)
+            Set<Integer> difference = new HashSet<>(set1);
+            difference.removeAll(set2);
+            System.out.println("Difference (set1 - set2): " + difference);
+
+            // Symmetric Difference
+            Set<Integer> symDiff = new HashSet<>(union);
+            symDiff.removeAll(intersection);
+            System.out.println("Symmetric Difference: " + symDiff);
+
+            // Check if set contains an element
+            System.out.println("Set1 contains 2? " + set1.contains(2));
+
+            // Remove element
+            set1.remove(2);
+            System.out.println("Set1 after removing 2: " + set1);
+
+            // Check if set is empty
+            System.out.println("Set1 is empty? " + set1.isEmpty());
+
+            // Size of set
+            System.out.println("Size of Set2: " + set2.size());
+        }
+    }
+    
+    class MapOperations {
+        MapOperations() {
+            // Creating a map
+            Map<Integer, String> map = new HashMap<>();
+    
+            // 1. Adding elements (put)
+            map.put(1, "Apple");
+            map.put(2, "Banana");
+            map.put(3, "Cherry");
+            System.out.println("Map: " + map);
+    
+            // 2. Accessing element by key (get)
+            System.out.println("Value for key 2: " + map.get(2));
+    
+            // 3. Updating value
+            map.put(2, "Blueberry");
+            System.out.println("Updated Map: " + map);
+    
+            // 4. Removing element
+            map.remove(3);
+            System.out.println("After removing key 3: " + map);
+    
+            // 5. Checking if key exists
+            System.out.println("Contains key 1? " + map.containsKey(1));
+    
+            // 6. Checking if value exists
+            System.out.println("Contains value 'Apple'? " + map.containsValue("Apple"));
+    
+            // 7. Iterating over keys
+            System.out.print("Keys: ");
+            for (Integer key : map.keySet()) {
+                System.out.print(key + " ");
+            }
+            System.out.println();
+    
+            // 8. Iterating over values
+            System.out.print("Values: ");
+            for (String value : map.values()) {
+                System.out.print(value + " ");
+            }
+            System.out.println();
+    
+            // 9. Iterating over key-value pairs
+            System.out.println("Entries:");
+            for (Map.Entry<Integer, String> entry : map.entrySet()) {
+                System.out.println(entry.getKey() + " -> " + entry.getValue());
+            }
+    
+            // 10. Size of map
+            System.out.println("Size of map: " + map.size());
+    
+            // 11. Check if map is empty
+            System.out.println("Is map empty? " + map.isEmpty());
+    
+            // 12. Clear map
+            map.clear();
+            System.out.println("Map after clear: " + map);
+        }
+    }
+
+    public class SubarraysProblems {
+        public void CountSubarraySumK() {
+            int[] arr = {1, 2, 3, 2, 1};
+            int k = 3;
+            int count = 0;
+            int sum = 0;
+
+            HashMap<Integer, Integer> map = new HashMap<>();
+            map.put(0, 1); // for subarrays starting from index 0
+
+            for (int num : arr) {
+                sum += num;
+                if (map.containsKey(sum - k)) {
+                    count += map.get(sum - k);
+                }
+                map.put(sum, map.getOrDefault(sum, 0) + 1);
+            }
+
+            System.out.println("Number of subarrays with sum " + k + ": " + count);
+        }
+
+        public void MaxLengthSubarraySumK() {
+            int[] arr = {1, 2, 3, 2, 1};
+            int k = 3;
+            int sum = 0;
+            int maxLength = 0;
+            HashMap<Integer, Integer> map = new HashMap<>();
+            map.put(0, -1); // important for subarrays starting at index 0
+
+            for (int i = 0; i < arr.length; i++) {
+                sum += arr[i];
+
+                if (map.containsKey(sum - k)) {
+                    maxLength = Math.max(maxLength, i - map.get(sum - k));
+                }
+
+                if (!map.containsKey(sum)) {
+                    map.put(sum, i); // store first occurrence only
+                }
+            }
+
+            System.out.println("Maximum length of subarray with sum " + k + ": " + maxLength);
+        }
+    }
+
+    public class TwoPointers {
+        public void TwoSum() {
+            int[] arr = {1, 2, 3, 4, 6};
+            int target = 6;
+
+            int left = 0, right = arr.length - 1;
+            boolean found = false;
+
+            while (left < right) {
+                int sum = arr[left] + arr[right];
+
+                if (sum == target) {
+                    System.out.println("Pair found: (" + arr[left] + ", " + arr[right] + ")");
+                    found = true;
+                    break;
+                } else if (sum < target) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+
+            if (!found) {
+                System.out.println("No pair found");
+            }
+        }
+
+        public void UnionTwoArrays() {
+            int[] arr1 = {1, 2, 4, 5, 6};
+            int[] arr2 = {2, 3, 5, 7};
+
+            int i = 0, j = 0;
+            ArrayList<Integer> union = new ArrayList<>();
+
+            while (i < arr1.length && j < arr2.length) {
+                if (arr1[i] < arr2[j]) {
+                    union.add(arr1[i++]);
+                } else if (arr1[i] > arr2[j]) {
+                    union.add(arr2[j++]);
+                } else { // equal
+                    union.add(arr1[i]);
+                    i++;
+                    j++;
+                }
+            }
+
+            while (i < arr1.length) union.add(arr1[i++]);
+            while (j < arr2.length) union.add(arr2[j++]);
+
+            System.out.println("Union: " + union);
+        }
+    }
+
+    public class UFD{
+        int max;
+        int components;
+        int[] leader;
+        int[] size;
+        public void UFDS(int n){
+            leader = new int[n+1];
+            size = new int[n+1];
+            max = 1;
+            components = n;
+            for(int i=1; i<=n; i++){
+                leader[i] = i;
+                size[i] = 1;
+            }
+        }
+        public int find(int x){
+            if(x == leader[x]) return x;
+            return leader[x] = find(leader[x]);
+        }
+        public boolean merge(int a, int b){
+            int sa = find(a);
+            int sb = find(b);
+            if(sa == sb) return false;
+            if(size[sa] < size[sb]){
+                leader[sa] = sb;
+                size[sb] += size[sa];
+                if(size[sb] > max) max = size[sb];
+            } 
+            else {
+                leader[sb] = sa;
+                size[sa] += size[sb];
+                if(size[sa] > max) max = size[sa];
+            }
+            components--;
+            return true;
+        }
+    }
+    
+    public class StackOps{
+        // .......
+    }
+
+    public class QueueOps{
+        // .......
+    }
+}
