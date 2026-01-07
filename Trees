@@ -1,4 +1,4 @@
-//fph(find path helper)
+# fph(find path helper)
 List<Node> fp(Node r,int a){
     List<Node> l = new ArrayList<>();
     fph(r,a,l);
@@ -22,7 +22,7 @@ void fph(Node r,int a,List<Node> l){
     }
 }
 -----------------------------------------------------------------------------------------------
-//BST Operations
+# BST Operations
 static class Node {
     int val;
     Node left, right;
@@ -81,7 +81,7 @@ static void inorder(Node root) {
     inorder(root.right);
 }
 -----------------------------------------------------------------------------------------------
-//Diameter of Binary Tree
+# Diameter of Binary Tree
 class TreeNode {
     int val;
     TreeNode left, right;
@@ -107,7 +107,7 @@ class BeingZero {
     }
 }
 -----------------------------------------------------------------------------------------------
-//Nodes at Kth level
+# Nodes at Kth level
 int nodesAtKLevel(Node r, int k) {
     if (r == null) return 0;
     if (k < 0) return 0;
@@ -129,7 +129,7 @@ int nodesAtKLevel(Node r, int k) {
     return 0;
 }
 -----------------------------------------------------------------------------------------------
-//views
+# views
 import java.util.*;
 
 // Tree node class
@@ -249,7 +249,7 @@ static List<Integer> bottomView(Node root) {
     return res;
 }
 -----------------------------------------------------------------------------------------------
-//LCA(Lowest Common Ancestor)
+# LCA(Lowest Common Ancestor)
 Node lca(Node r, int a, int b) {
     if (r == null) return null;
     if (r.val == a || r.val == b) return r;
@@ -261,7 +261,7 @@ Node lca(Node r, int a, int b) {
     return (leftLca != null) ? leftLca : rightLca;
 }   
 -----------------------------------------------------------------------------------------------
-//Covered and Uncovered Nodes
+# Covered and Uncovered Nodes
 static class Node {
     int val;
     Node left, right;
@@ -315,7 +315,7 @@ static int sumCovered(Node root) {
     return sumAll(root) - sumUncovered(root);
 }
 -----------------------------------------------------------------------------------------------
-//Burn a tree
+# Burn a tree
 class BeingZero {
 
     public int solve(TreeNode root, int st) {
@@ -406,7 +406,7 @@ class BeingZero {
     }
 }
 -----------------------------------------------------------------------------------------------
-//Is Mirror Image
+# Is Mirror Image
 static class Node {
     int val;
     Node left, right;
@@ -447,7 +447,7 @@ static void inorder(Node root, List<Integer> res) {
     inorder(root.right, res);
 }
 -----------------------------------------------------------------------------------------------
-//Nodes at K distance
+# Nodes at K distance
 int solve(TreeNode r, int s, int k) {
     List<TreeNode> l = new ArrayList<>();
     fph(r, s, l); // Find path to node s
