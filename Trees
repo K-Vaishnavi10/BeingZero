@@ -1,0 +1,504 @@
+//fph(find path helper)
+List<Node> fp(Node r,int a){
+    List<Node> l = new ArrayList<>();
+    fph(r,a,l);
+    return l;   
+}
+void fph(Node r,int a,List<Node> l){
+    if(r==null) return;
+    if(r.val==a){
+        l.add(r);
+        return;
+    }
+    fph(r.left,a,l);
+    if(l.size()>0){
+        l.add(r);
+        return;
+    }
+    fph(r.right,a,l);
+    if(l.size()>0){
+        l.add(r);
+        return;
+    }
+}
+-----------------------------------------------------------------------------------------------
+//BST Operations
+static class Node {
+    int val;
+    Node left, right;
+    Node(int val) {
+        this.val = val;
+        left = right = null;
+    }
+}
+
+// Insert a value into BST
+static Node insert(Node root, int val) {
+    if (root == null) return new Node(val);
+    if (val < root.val) root.left = insert(root.left, val);
+    else if (val > root.val) root.right = insert(root.right, val);
+    // If val == root.val, no duplicates inserted (can modify if needed)
+    return root;
+}
+
+// Search for a value in BST, return true if found
+static boolean search(Node root, int val) {
+    if (root == null) return false;
+    if (val == root.val) return true;
+    if (val < root.val) return search(root.left, val);
+    else return search(root.right, val);
+}
+
+// Find minimum value node in BST (used in delete)
+static Node findMin(Node root) {
+    while (root.left != null) root = root.left;
+    return root;
+}
+
+// Delete a value from BST and return new root
+static Node delete(Node root, int val) {
+    if (root == null) return null;
+    if (val < root.val) {
+        root.left = delete(root.left, val);
+    } else if (val > root.val) {
+        root.right = delete(root.right, val);
+    } else {
+        if (root.left == null && root.right == null) return null;
+        if (root.left == null) return root.right;
+        if (root.right == null) return root.left;
+        Node minRight = findMin(root.right);
+        root.val = minRight.val;
+        root.right = delete(root.right, minRight.val);
+    }
+    return root;
+}
+
+// Inorder traversal of BST (sorted order)
+static void inorder(Node root) {
+    if (root == null) return;
+    inorder(root.left);
+    System.out.print(root.val + " ");
+    inorder(root.right);
+}
+-----------------------------------------------------------------------------------------------
+//Diameter of Binary Tree
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    TreeNode(int d) {
+        val = d;
+        left = right = null;
+    }
+}
+
+class BeingZero {
+    int ans;
+    int diameterOfTree(TreeNode r) {
+        ans = 0;
+        height(r);
+        return ans;
+    }
+    int height(TreeNode r) {
+        if (r == null) return 0;
+        int l = height(r.left);
+        int ri = height(r.right);
+        ans = Math.max(ans, l + ri + 1);
+        return Math.max(l, ri) + 1;
+    }
+}
+-----------------------------------------------------------------------------------------------
+//Nodes at Kth level
+int nodesAtKLevel(Node r, int k) {
+    if (r == null) return 0;
+    if (k < 0) return 0;
+    Queue<Node> q = new LinkedList<>();
+    q.add(r);
+    int ans = -1;
+    
+    while (!q.isEmpty()) {
+        ans++;
+        int size = q.size();
+        if (ans == k) return size;
+        
+        for (int i = 0; i < size; i++) {
+            Node cur = q.poll();
+            if (cur.left != null) q.add(cur.left);
+            if (cur.right != null) q.add(cur.right);
+        }
+    }
+    return 0;
+}
+-----------------------------------------------------------------------------------------------
+//views
+import java.util.*;
+
+// Tree node class
+static class Node {
+    int val;
+    Node left, right;
+    Node(int val) {
+        this.val = val;
+        left = right = null;
+    }
+}
+
+// 1. Right View
+static List<Integer> rightView(Node root) {
+    List<Integer> res = new ArrayList<>();
+    if (root == null) return res;
+
+    Queue<Node> q = new LinkedList<>();
+    q.add(root);
+
+    while (!q.isEmpty()) {
+        int size = q.size();
+        for (int i = 0; i < size; i++) {
+            Node cur = q.poll();
+            if (i == size - 1) res.add(cur.val); // last node in level
+            if (cur.left != null) q.add(cur.left);
+            if (cur.right != null) q.add(cur.right);
+        }
+    }
+    return res;
+}
+
+// 2. Left View
+static List<Integer> leftView(Node root) {
+    List<Integer> res = new ArrayList<>();
+    if (root == null) return res;
+
+    Queue<Node> q = new LinkedList<>();
+    q.add(root);
+
+    while (!q.isEmpty()) {
+        int size = q.size();
+        for (int i = 0; i < size; i++) {
+            Node cur = q.poll();
+            if (i == 0) res.add(cur.val); // first node in level
+            if (cur.left != null) q.add(cur.left);
+            if (cur.right != null) q.add(cur.right);
+        }
+    }
+    return res;
+}
+
+// 3. Zig-Zag Traversal
+static List<Integer> zigZagTraversal(Node root) {
+    List<Integer> res = new ArrayList<>();
+    if (root == null) return res;
+
+    Queue<Node> q = new LinkedList<>();
+    q.add(root);
+    boolean leftToRight = true;
+
+    while (!q.isEmpty()) {
+        int size = q.size();
+        int[] level = new int[size];
+        for (int i = 0; i < size; i++) {
+            Node cur = q.poll();
+            int index = leftToRight ? i : size - 1 - i;
+            level[index] = cur.val;
+            if (cur.left != null) q.add(cur.left);
+            if (cur.right != null) q.add(cur.right);
+        }
+        for (int val : level) res.add(val);
+        leftToRight = !leftToRight;
+    }
+    return res;
+}
+
+// 4. Top View
+static List<Integer> topView(Node root) {
+    List<Integer> res = new ArrayList<>();
+    if (root == null) return res;
+
+    class Pair { Node node; int hd; Pair(Node n, int h) { node = n; hd = h; } }
+    Map<Integer, Integer> map = new TreeMap<>();
+    Queue<Pair> q = new LinkedList<>();
+    q.add(new Pair(root, 0));
+
+    while (!q.isEmpty()) {
+        Pair p = q.poll();
+        if (!map.containsKey(p.hd)) map.put(p.hd, p.node.val);
+        if (p.node.left != null) q.add(new Pair(p.node.left, p.hd - 1));
+        if (p.node.right != null) q.add(new Pair(p.node.right, p.hd + 1));
+    }
+
+    res.addAll(map.values());
+    return res;
+}
+
+// 5. Bottom View
+static List<Integer> bottomView(Node root) {
+    List<Integer> res = new ArrayList<>();
+    if (root == null) return res;
+
+    class Pair { Node node; int hd; Pair(Node n, int h) { node = n; hd = h; } }
+    Map<Integer, Integer> map = new TreeMap<>();
+    Queue<Pair> q = new LinkedList<>();
+    q.add(new Pair(root, 0));
+
+    while (!q.isEmpty()) {
+        Pair p = q.poll();
+        map.put(p.hd, p.node.val); // overwrite for bottom view
+        if (p.node.left != null) q.add(new Pair(p.node.left, p.hd - 1));
+        if (p.node.right != null) q.add(new Pair(p.node.right, p.hd + 1));
+    }
+
+    res.addAll(map.values());
+    return res;
+}
+-----------------------------------------------------------------------------------------------
+//LCA(Lowest Common Ancestor)
+Node lca(Node r, int a, int b) {
+    if (r == null) return null;
+    if (r.val == a || r.val == b) return r;
+
+    Node leftLca = lca(r.left, a, b);
+    Node rightLca = lca(r.right, a, b);
+
+    if (leftLca != null && rightLca != null) return r;
+    return (leftLca != null) ? leftLca : rightLca;
+}   
+-----------------------------------------------------------------------------------------------
+//Covered and Uncovered Nodes
+static class Node {
+    int val;
+    Node left, right;
+    Node(int val) {
+        this.val = val;
+        left = right = null;
+    }
+}
+
+// Sum of left boundary (excluding leaves)
+static int sumLeftBoundary(Node node) {
+    if (node == null) return 0;
+    if (node.left != null) return node.val + sumLeftBoundary(node.left);
+    else if (node.right != null) return node.val + sumLeftBoundary(node.right);
+    return 0; // leaf node excluded
+}
+
+// Sum of right boundary (excluding leaves)
+static int sumRightBoundary(Node node) {
+    if (node == null) return 0;
+    if (node.right != null) return node.val + sumRightBoundary(node.right);
+    else if (node.left != null) return node.val + sumRightBoundary(node.left);
+    return 0; // leaf node excluded
+}
+
+// Sum of all leaf nodes
+static int sumLeaves(Node node) {
+    if (node == null) return 0;
+    if (node.left == null && node.right == null) return node.val;
+    return sumLeaves(node.left) + sumLeaves(node.right);
+}
+
+// Total sum of uncovered nodes (root + left boundary + right boundary + leaves)
+static int sumUncovered(Node root) {
+    if (root == null) return 0;
+    int sum = root.val;
+    if (root.left != null) sum += sumLeftBoundary(root.left);
+    if (root.right != null) sum += sumRightBoundary(root.right);
+    sum += sumLeaves(root.left) + sumLeaves(root.right);
+    return sum;
+}
+
+// Total sum of all nodes
+static int sumAll(Node root) {
+    if (root == null) return 0;
+    return root.val + sumAll(root.left) + sumAll(root.right);
+}
+
+// Sum of covered nodes
+static int sumCovered(Node root) {
+    return sumAll(root) - sumUncovered(root);
+}
+-----------------------------------------------------------------------------------------------
+//Burn a tree
+class BeingZero {
+
+    public int solve(TreeNode root, int st) {
+
+        if (root == null)
+            return 0;
+
+        // Map to store parent of each node
+        HashMap<TreeNode, TreeNode> parent = new HashMap<>();
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+
+        // Step 1: Map parents using BFS
+        while (!q.isEmpty()) {
+            TreeNode ele = q.poll();
+
+            if (ele.left != null) {
+                parent.put(ele.left, ele);
+                q.add(ele.left);
+            }
+
+            if (ele.right != null) {
+                parent.put(ele.right, ele);
+                q.add(ele.right);
+            }
+        }
+
+        // Step 2: Find starting node
+        TreeNode start = search(root, st);
+
+        // Step 3: Burn the tree
+        HashSet<TreeNode> vis = new HashSet<>();
+        q.add(start);
+        vis.add(start);
+
+        int time = 0;
+
+        while (!q.isEmpty()) {
+            int n = q.size();
+            boolean flag = false;
+
+            for (int i = 0; i < n; i++) {
+                TreeNode ele = q.poll();
+
+                // Burn parent
+                if (parent.containsKey(ele) && !vis.contains(parent.get(ele))) {
+                    vis.add(parent.get(ele));
+                    q.add(parent.get(ele));
+                    flag = true;
+                }
+
+                // Burn left child
+                if (ele.left != null && !vis.contains(ele.left)) {
+                    vis.add(ele.left);
+                    q.add(ele.left);
+                    flag = true;
+                }
+
+                // Burn right child
+                if (ele.right != null && !vis.contains(ele.right)) {
+                    vis.add(ele.right);
+                    q.add(ele.right);
+                    flag = true;
+                }
+            }
+
+            if (flag)
+                time++;
+        }
+
+        return time;
+    }
+
+    // Search function to find starting node
+    private TreeNode search(TreeNode root, int val) {
+        if (root == null)
+            return null;
+
+        if (root.val == val)
+            return root;
+
+        TreeNode left = search(root.left, val);
+        if (left != null)
+            return left;
+
+        return search(root.right, val);
+    }
+}
+-----------------------------------------------------------------------------------------------
+//Is Mirror Image
+static class Node {
+    int val;
+    Node left, right;
+    Node(int val) {
+        this.val = val;
+        left = right = null;
+    }
+}
+
+// Mirror the tree in-place
+static void mirror(Node root) {
+    if (root == null) return;
+
+    // Swap left and right
+    Node temp = root.left;
+    root.left = root.right;
+    root.right = temp;
+
+    mirror(root.left);
+    mirror(root.right);
+}
+
+// Check if two trees are mirror images
+static boolean isMirror(Node t1, Node t2) {
+    if (t1 == null && t2 == null) return true;
+    if (t1 == null || t2 == null) return false;
+
+    return (t1.val == t2.val) &&
+           isMirror(t1.left, t2.right) &&
+           isMirror(t1.right, t2.left);
+}
+
+// Inorder traversal to fill list
+static void inorder(Node root, List<Integer> res) {
+    if (root == null) return;
+    inorder(root.left, res);
+    res.add(root.val);
+    inorder(root.right, res);
+}
+-----------------------------------------------------------------------------------------------
+//Nodes at K distance
+int solve(TreeNode r, int s, int k) {
+    List<TreeNode> l = new ArrayList<>();
+    fph(r, s, l); // Find path to node s
+    int ans = 0;
+    ans += helper(l.get(0), k);
+    for (int i = 1; i < l.size(); i++) {
+        if (k - i == 0)
+            ans++;
+        else if (l.get(i).left == l.get(i - 1))
+            ans += helper(l.get(i).right, k - i - 1);
+        else
+            ans += helper(l.get(i).left, k - i - 1);
+    }
+    return ans;
+}
+
+// Function to find path from root to node s
+public void fph(TreeNode r, int s, List<TreeNode> l) {
+    if (r == null) return;
+    if (r.val == s) {
+        l.add(r);
+        return;
+    }
+    fph(r.left, s, l);
+    if (l.size() > 0) {
+        l.add(r);
+        return;
+    }
+    fph(r.right, s, l);
+    if (l.size() > 0) {
+        l.add(r);
+        return;
+    }
+}
+
+// Level-order helper to count nodes at distance k
+public int helper(TreeNode r, int k) {
+    if (r == null || k < 0) return 0;
+    Queue<TreeNode> q = new LinkedList<>();
+    q.add(r);
+    int level = 0;
+    while (!q.isEmpty()) {
+        int size = q.size();
+        if (level == k) return size;
+        for (int i = 0; i < size; i++) {
+            TreeNode cur = q.remove();
+            if (cur.left != null) q.add(cur.left);
+            if (cur.right != null) q.add(cur.right);
+        }
+        level++;
+    }
+    return 0;
+}
+-----------------------------------------------------------------------------------------------
