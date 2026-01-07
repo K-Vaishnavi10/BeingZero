@@ -1,0 +1,104 @@
+class MapOperations {
+    MapOperations() {
+        // Creating a map
+        Map<Integer, String> map = new HashMap<>();
+
+        // 1. Adding elements (put)
+        map.put(1, "Apple");
+        map.put(2, "Banana");
+        map.put(3, "Cherry");
+        System.out.println("Map: " + map);
+
+        // 2. Accessing element by key (get)
+        System.out.println("Value for key 2: " + map.get(2));
+
+        // 3. Updating value
+        map.put(2, "Blueberry");
+        System.out.println("Updated Map: " + map);
+
+        // 4. Removing element
+        map.remove(3);
+        System.out.println("After removing key 3: " + map);
+
+        // 5. Checking if key exists
+        System.out.println("Contains key 1? " + map.containsKey(1));
+
+        // 6. Checking if value exists
+        System.out.println("Contains value 'Apple'? " + map.containsValue("Apple"));
+
+        // 7. Iterating over keys
+        System.out.print("Keys: ");
+        for (Integer key : map.keySet()) {
+            System.out.print(key + " ");
+        }
+        System.out.println();
+
+        // 8. Iterating over values
+        System.out.print("Values: ");
+        for (String value : map.values()) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
+
+        // 9. Iterating over key-value pairs
+        System.out.println("Entries:");
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+
+        // 10. Size of map
+        System.out.println("Size of map: " + map.size());
+
+        // 11. Check if map is empty
+        System.out.println("Is map empty? " + map.isEmpty());
+
+        // 12. Clear map
+        map.clear();
+        System.out.println("Map after clear: " + map);
+    }
+}
+
+public class SubarraysProblems {
+    public void CountSubarraySumK() {
+        int[] arr = {1, 2, 3, 2, 1};
+        int k = 3;
+        int count = 0;
+        int sum = 0;
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1); // for subarrays starting from index 0
+
+        for (int num : arr) {
+            sum += num;
+            if (map.containsKey(sum - k)) {
+                count += map.get(sum - k);
+            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+
+        System.out.println("Number of subarrays with sum " + k + ": " + count);
+    }
+
+    public void MaxLengthSubarraySumK() {
+        int[] arr = {1, 2, 3, 2, 1};
+        int k = 3;
+        int sum = 0;
+        int maxLength = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1); // important for subarrays starting at index 0
+
+        for (int i = 0; i < arr.length; i++) {
+            sum += arr[i];
+
+            if (map.containsKey(sum - k)) {
+                maxLength = Math.max(maxLength, i - map.get(sum - k));
+            }
+
+            if (!map.containsKey(sum)) {
+                map.put(sum, i); // store first occurrence only
+            }
+        }
+
+        System.out.println("Maximum length of subarray with sum " + k + ": " + maxLength);
+    }
+}
